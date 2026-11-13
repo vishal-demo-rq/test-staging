@@ -46,6 +46,12 @@ const server = http.createServer((request, response) => {
     return;
   }
 
+  if (requestedPath === "/health") {
+    response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
+    response.end(request.method === "HEAD" ? undefined : "ok");
+    return;
+  }
+
   const publicFile = publicFiles.get(requestedPath);
   if (!publicFile) {
     response.writeHead(404).end("Not found");
